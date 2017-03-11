@@ -12,7 +12,7 @@ gulp.task('serve-static', function(){
     .pipe(webserver({
       https: true,
       port: '8443',
-      host: 'localhost',
+      host: '0.0.0.0',
       directoryListing: true,
       fallback: 'index.html'
     }));
@@ -24,15 +24,15 @@ gulp.task('validate-xml', function () {
   var xmlFilePath = options.xmlfile || './manifest.xml';
   var resultsAsJson = options.json || false;
   var xml = fs.readFileSync(xmlFilePath);
-  
+
   if (!resultsAsJson) {
     console.log('\nValidating ' + chalk.blue(xmlFilePath.substring(xmlFilePath.lastIndexOf('/')+1)) + ':');
-  } 
+  }
   var result = xmllint.validateXML({
     xml: xml,
     schema: xsd
   });
-  
+
   if (resultsAsJson) {
     console.log(JSON.stringify(result));
   }
