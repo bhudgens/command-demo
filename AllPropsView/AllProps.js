@@ -16,12 +16,14 @@
           }
 
           loadProps(Office.context.mailbox.item);
+
+          window.open('http://www.google.com');
       });
   };
 
   function isPersistenceSupported() {
     // This feature is part of the preview 1.5 req set
-    // Since 1.5 isn't fully implemented, just check that the 
+    // Since 1.5 isn't fully implemented, just check that the
     // method is defined.
     // Once 1.5 is implemented, we can replace this with
     // Office.context.requirements.isSetSupported('Mailbox', 1.5)
@@ -31,55 +33,55 @@
   function loadNewItem(eventArgs) {
     loadProps(Office.context.mailbox.item);
   };
-  
+
   // Take an array of AttachmentDetails objects and
   // build a list of attachment names, separated by a line-break
   function buildAttachmentsString(attachments) {
     if (attachments && attachments.length > 0) {
       var returnString = "";
-      
+
       for (var i = 0; i < attachments.length; i++) {
         if (i > 0) {
           returnString = returnString + "<br/>";
         }
         returnString = returnString + attachments[i].name;
       }
-      
+
       return returnString;
     }
-    
+
     return "None";
   }
-  
+
   // Format an EmailAddressDetails object as
   // GivenName Surname <emailaddress>
   function buildEmailAddressString(address) {
     return address.displayName + " &lt;" + address.emailAddress + "&gt;";
   }
-  
+
   // Take an array of EmailAddressDetails objects and
   // build a list of formatted strings, separated by a line-break
   function buildEmailAddressesString(addresses) {
     if (addresses && addresses.length > 0) {
       var returnString = "";
-      
+
       for (var i = 0; i < addresses.length; i++) {
         if (i > 0) {
           returnString = returnString + "<br/>";
         }
         returnString = returnString + buildEmailAddressString(addresses[i]);
       }
-      
+
       return returnString;
     }
-    
+
     return "None";
   }
-  
+
   // Load properties from a Message object
   function loadMessageProps(item) {
     $('#message-props').show();
-    
+
     $('#attachments').html(buildAttachmentsString(item.attachments));
     $('#cc').html(buildEmailAddressesString(item.cc));
     $('#conversationId').text(item.conversationId);
@@ -90,11 +92,11 @@
     $('#subject').text(item.subject);
     $('#to').html(buildEmailAddressesString(item.to));
   }
-  
+
   // Load properties from an Appointment object
   function loadAppointmentProps(item) {
     $('#appointment-props').show();
-    
+
     $('#appt-attachments').html(buildAttachmentsString(item.attachments));
     $('#end').text(item.end.toLocaleString());
     $('#location').text(item.location);
@@ -106,29 +108,29 @@
     $('#start').text(item.start.toLocaleString());
     $('#appt-subject').text(item.subject);
   }
-  
+
   // Load properties from the Item base object, then load the
   // type-specific properties.
   function loadProps(item) {
-    
+
     $('#dateTimeCreated').text(item.dateTimeCreated.toLocaleString());
     $('#dateTimeModified').text(item.dateTimeModified.toLocaleString());
     $('#itemClass').text(item.itemClass);
     $('#itemId').text(item.itemId);
     $('#itemType').text(item.itemType);
-    
+
     item.body.getAsync('html', function(result){
       if (result.status === 'succeeded') {
         $('#bodyHtml').text(result.value);
       }
     });
-    
+
     item.body.getAsync('text', function(result){
       if (result.status === 'succeeded') {
         $('#bodyText').text(result.value);
       }
     });
-    
+
     if (item.itemType == Office.MailboxEnums.ItemType.Message){
       loadMessageProps(item);
     }
@@ -138,23 +140,23 @@
   }
 })();
 
-// MIT License: 
- 
-// Permission is hereby granted, free of charge, to any person obtaining 
-// a copy of this software and associated documentation files (the 
-// ""Software""), to deal in the Software without restriction, including 
-// without limitation the rights to use, copy, modify, merge, publish, 
-// distribute, sublicense, and/or sell copies of the Software, and to 
-// permit persons to whom the Software is furnished to do so, subject to 
-// the following conditions: 
- 
-// The above copyright notice and this permission notice shall be 
-// included in all copies or substantial portions of the Software. 
- 
-// THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, 
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
-// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE 
-// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION 
-// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
+// MIT License:
+
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// ""Software""), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
