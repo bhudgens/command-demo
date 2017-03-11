@@ -4,7 +4,6 @@
   "scripts": {
     "start": "gulp serve-static"
   },
-  "devDependencies": {},
   "dependencies": {
     "chalk": "^1.1.1",
     "gulp": "^3.9.0",
